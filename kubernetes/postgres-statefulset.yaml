@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: grades-tracker-database-statefulset
+  namespace: grades-tracker-namespace
+  labels:
+    kind: statefulset
+    tier: database
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      kind: statefulset
+      tier: database
+
+  template:
+    metadata:
+      labels:
+        kind: statefulset
+        tier: database
+    spec:
+    volumes:
+      - name: init-db
+        configMap:
+          name: init-db
+      containers:
+      - name: tracker-database
+        image: postgres:17
+        ports:
+        - containerPort: 5432
+        env:
+        - name: postgres_user
+          valueFrom:
+            configMapKeyRef:
+              name: database-configmap
+              key: POSTGRES_USER
+        - name: postgres_db
+          valueFrom:
+            configMapKeyRef:
+              name: database-configmap
+              key: POSTGRES_DB
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-password
+              key: POSTGRES_PASSWORD
+        volumeMounts:
+        - name: init-db
+          mountPath: /docker-entrypoint-initdb.d
+
