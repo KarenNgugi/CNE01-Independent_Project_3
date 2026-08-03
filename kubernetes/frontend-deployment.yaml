@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grades-tracker-frontend-deployment
+  namespace: grades-tracker-namespace
+  labels:
+    kind: deployment
+    tier: frontend
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      kind: deployment
+      tier: frontend
+
+  template:
+    metadata:
+      labels:
+        kind: deployment
+        tier: frontend
+    spec:
+      containers:
+      - name: tracker-frontend
+        image: karenngugi/grades-tracker-frontend:1.0.0
+        ports:
+        - containerPort: 80
+        
