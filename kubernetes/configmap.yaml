@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-configmap
+  namespace: grades-tracker-namespace
+data:
+  APP_ENV: "dev"
+  DB_HOST: "tracker-db"
+  DB_PORT: "5432"
+  DB_NAME: "grades_db"
+  DB_USER: "postgres"
+  API_PORT: "8000" 
+  
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-configmap
+  namespace: grades-tracker-namespace
+data:
+  POSTGRES_USER: "postgres"
+  POSTGRES_DB: "grades_db"
