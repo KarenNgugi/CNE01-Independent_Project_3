@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: test-ns
+  name: headless-svc
+spec:
+  selector:
+    tier: database
+  clusterIP: None
+  ports:
+  - name: db-headless
+    port: 5432
