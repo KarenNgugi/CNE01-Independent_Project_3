@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: grades-tracker-app
-  storageClassName: standard
+  storageClassName: ""
   volumeName: grades-tracker-pv
   resources:
     requests:
