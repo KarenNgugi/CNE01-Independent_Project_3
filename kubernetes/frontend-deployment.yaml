@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment
+  name: frde
   namespace: grades-tracker-namespace
   labels:
     tier: frontend
@@ -22,4 +22,4 @@ spec:
         image: karenngugi/grades-tracker-frontend:1.0.0
         ports:
         - containerPort: 80
-       
+          name: frontend-port
