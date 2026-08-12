@@ -1,12 +1,15 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: grades-tracker-statefulset
-  namespace: grades-tracker-namespace
+  name: test-ss
+  namespace: test-ns
+  # name: grades-tracker-statefulset
+  # namespace: grades-tracker-namespace
 spec:
   selector:
     matchLabels:
-      app: grades-tracker-app
+      app: test-app
+      # app: grades-tracker-app
       tier: database
   serviceName: headless-svc
   replicas: 1
@@ -18,7 +21,8 @@ spec:
   template:
     metadata:
       labels:
-        app: grades-tracker-app
+        app: test-app
+        # app: grades-tracker-app
         tier: database
     spec:
       terminationGracePeriodSeconds: 10
@@ -28,7 +32,8 @@ spec:
             name: init-db
         - name: postgres-data
           persistentVolumeClaim:
-            claimName: grades-tracker-pvc
+            claimName: test-pvc
+            # claimName: grades-tracker-pvc
       containers:
       - name: tracker-database
         image: postgres:15-alpine
@@ -58,4 +63,12 @@ spec:
           mountPath: /docker-entrypoint-initdb.d
         - name: postgres-data
           mountPath: /var/lib/postgresql/data 
-  
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: postgres-data
+  #   spec:
+  #     storageClassName: ""
+  #     accessModes: [ "ReadWriteOnce" ]
+  #     resources:
+  #       requests:
+  #         storage: 1Gi

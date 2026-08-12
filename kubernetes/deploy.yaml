@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frde
+  namespace: test-ns
+  labels:
+    tier: frontend
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      tier: frontend
+
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: tracker-frontend
+        image: karenngugi/grades-tracker-frontend:1.0.0
+        ports:
+        - containerPort: 80
+   
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bede
+  namespace: test-ns
+  labels:
+    tier: backend
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      tier: backend
+
+  template:
+    metadata:
+      labels:
+        tier: backend
+    spec:
+      containers:
+      - name: tracker-backend
+        image: karenngugi/grades-tracker-backend:1.0.0
+        ports:
+        - containerPort: 3000
+          name: backend-port
+        env:
+        - name: DB_HOST
+          valueFrom: 
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom: 
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom: 
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_NAME
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_USER
+        - name: API_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: API_PORT
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: DB_PASSWORD
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dbde
+  namespace: test-ns
+  labels:
+    tier: database
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      tier: database
+
+  template:
+    metadata:
+      labels:
+        tier: database
+    spec:
+      volumes:
+        - name: init-db
+          configMap:
+            name: init-db
+      containers:
+      - name: tracker-database
+        image: postgres:17
+        ports:
+        - containerPort: 5432
+          name: database-port
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: database-configmap
+              key: POSTGRES_USER
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: database-configmap
+              key: POSTGRES_DB
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-password
+              key: POSTGRES_PASSWORD
+        volumeMounts:
+        - name: init-db
+          mountPath: /docker-entrypoint-initdb.d
+

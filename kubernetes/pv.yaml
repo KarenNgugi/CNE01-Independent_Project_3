@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: www.karen.tech # The name of a PersistentVolume object must be a valid DNS subdomain name.
+  namespace: test-ns #TODO: update
+spec:
+  capacity:
+    storage: 1.5Gi
+    accessModes:
+    # - ReadWriteOncePod # only one Pod can write to the volume; recommended in production envs; only available for csi
+    - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    storageClassName: slow
+    mountOptions:
+    - hard
+    - nfsvers=4.1
+    local: #TODO: replace with either csi or local
+      path: /tmp
+      server: 172.0.0.2 # TODO: replace with actual server (minikube) ip address

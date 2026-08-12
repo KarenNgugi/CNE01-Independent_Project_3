@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bede
+  namespace: test-ns
+  labels:
+    tier: backend
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      tier: backend
+
+  template:
+    metadata:
+      labels:
+        tier: backend
+    spec:
+      containers:
+      - name: tracker-backend
+        image: karenngugi/grades-tracker-backend:1.0.0
+        ports:
+        - containerPort: 3000
+          name: backend-port
+        env:
+        - name: DB_HOST
+          valueFrom: 
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom: 
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom: 
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_NAME
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: DB_PASSWORD
+        - name: API_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: API_PORT
+
+    
+
+    # spec:
+    #   containers:
+    #   - name: tracker-backend
+    #     image: karenngugi/grades-tracker-backend:1.0.0
+    #     ports:
+    #     - containerPort: 3000
+    #       name: backend-port
+    #     env:
+    #     - name: DB_HOST
+    #       valueFrom: 
+    #         configMapKeyRef:
+    #           name: backend-configmap
+    #           key: DB_HOST
+    #     - name: DB_PORT
+    #       valueFrom: 
+    #         configMapKeyRef:
+    #           name: backend-configmap
+    #           key: DB_PORT
+    #     - name: DB_NAME
+    #       valueFrom: 
+    #         configMapKeyRef:
+    #           name: backend-configmap
+    #           key: DB_NAME
+    #     - name: DB_USER
+    #       valueFrom:
+    #         configMapKeyRef:
+    #           name: backend-configmap
+    #           key: DB_USER
+    #     - name: API_PORT
+    #       valueFrom:
+    #         configMapKeyRef:
+    #           name: backend-configmap
+    #           key: API_PORT
+    #     - name: DB_PASSWORD
+    #       valueFrom:
+    #         secretKeyRef:
+    #           name: db-password
+    #           key: DB_PASSWORD
