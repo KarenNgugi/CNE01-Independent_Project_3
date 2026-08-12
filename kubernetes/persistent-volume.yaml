@@ -15,5 +15,5 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /data/grade-tracker/postgres
+    path: /data/grades-tracker/postgres
   storageClassName: ""
