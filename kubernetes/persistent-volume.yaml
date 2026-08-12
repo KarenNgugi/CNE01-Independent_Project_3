@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grades-tracker-pv
+  labels:
+    app: grades-tracker-app
+spec:
+  claimRef:
+    name: grades-tracker-pvc
+    namespace: grades-tracker-namespace
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /data/grade-tracker/postgres
+  # storageClassName: standard
+  # volumes:
+  #   - name: grades-tracker-postgres
+  #     hostPath:
+  #       path:  /data/grade-tracker/postgres
