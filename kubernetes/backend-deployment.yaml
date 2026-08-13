@@ -1,9 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
+  name: grades-tracker-backend
   namespace: grades-tracker-namespace
   labels:
+    kind: deployment
     tier: backend
 spec:
   replicas: 3
@@ -15,42 +16,43 @@ spec:
   template:
     metadata:
       labels:
+        kind: deployment
         tier: backend
     spec:
       containers:
       - name: tracker-backend
         image: karenngugi/grades-tracker-backend:1.0.0
         ports:
-        - containerPort: 3000
-          name: backend-port
+        - containerPort: 8000
         env:
-        - name: DB_HOST
+        - name: db_host
           valueFrom: 
             configMapKeyRef:
               name: backend-configmap
               key: DB_HOST
-        - name: DB_PORT
+        - name: db_port
           valueFrom: 
             configMapKeyRef:
               name: backend-configmap
               key: DB_PORT
-        - name: DB_NAME
+        - name: db_name
           valueFrom: 
             configMapKeyRef:
               name: backend-configmap
               key: DB_NAME
-        - name: DB_USER
+        - name: db_user
           valueFrom:
             configMapKeyRef:
               name: backend-configmap
               key: DB_USER
-        - name: API_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: backend-configmap
-              key: API_PORT
-        - name: DB_PASSWORD
+        - name: db_password
           valueFrom:
             secretKeyRef:
               name: db-password
               key: DB_PASSWORD
+        - name: api_port
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: API_PORT
+
