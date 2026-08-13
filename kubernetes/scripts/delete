@@ -1,0 +1,14 @@
+# use this instead of hardcoding /bin/bash
+#!/usr/bin/env bash
+
+kubectl delete -f frontend-deployment.yaml 
+kubectl delete -f backend-deployment.yaml 
+kubectl delete -f postgres-statefulset.yaml 
+kubectl delete -f postgres-service.yaml 
+kubectl delete -f postgres-headless-service.yaml 
+kubectl delete -f backend-service.yaml 
+kubectl delete -f frontend-service.yaml 
+kubectl delete -f persistent-volume-claim.yaml 
+kubectl delete -f persistent-volume.yaml 
+kubectl delete -f configmap.yaml 
+kubectl delete -f namespace.yaml 

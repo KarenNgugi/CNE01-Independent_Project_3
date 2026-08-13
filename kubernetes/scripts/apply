@@ -1,0 +1,28 @@
+# use this instead of hardcoding /bin/bash
+#!/usr/bin/env bash
+
+kubectl apply -f namespace.yaml 
+kubectl apply -f configmap.yaml 
+kubectl config set-context --current --namespace=grades-tracker-namespace
+kubectl create secret generic db-password --from-literal=DB_PASSWORD="password"
+kubectl create secret generic postgres-password --from-literal=POSTGRES_PASSWORD="password"
+kubectl create configmap init-db --from-file=../database/init.sql
+kubectl apply -f persistent-volume.yaml 
+kubectl apply -f persistent-volume-claim.yaml 
+kubectl apply -f postgres-service.yaml 
+kubectl apply -f postgres-headless-service.yaml 
+kubectl apply -f postgres-statefulset.yaml 
+kubectl apply -f backend-service.yaml 
+kubectl apply -f backend-deployment.yaml 
+kubectl apply -f frontend-service.yaml 
+kubectl apply -f frontend-deployment.yaml 
+
+
+
+
+
+
+
+
+
+
