@@ -21,14 +21,6 @@ spec:
         app: grades-tracker-app
         tier: database
     spec:
-      terminationGracePeriodSeconds: 10
-      volumes:
-        - name: init-db
-          configMap:
-            name: init-db
-        - name: postgres-data
-          persistentVolumeClaim:
-            claimName: grades-tracker-pvc
       containers:
       - name: tracker-database
         image: postgres:15-alpine
@@ -58,3 +50,18 @@ spec:
           mountPath: /docker-entrypoint-initdb.d
         - name: postgres-data
           mountPath: /var/lib/postgresql/data 
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: init-db
+          configMap:
+            name: init-db
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: grades-tracker-pvc
