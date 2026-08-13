@@ -15,11 +15,37 @@ Upon completion of this project, I will be able to demonstrate how to:
 * Troubleshoot Kubernetes workload issues using kubectl
 * Document Kubernetes architecture professionally on GitHub
 
+## Prerequisites
+You need the following to be able to run the application:
+- git
+- Docker
+- Minikube
+- kubectl
 
 ## Quick Start
 ```
+# create project folder and navigate into it
+mkdir kubernetes_project; cd $_
 
+# clone the project
+git clone git@github.com:KarenNgugi/CNE01-Independent_Project_3.git .
+
+# start Minikube
+minikube start --driver=docker
+
+# run the script to apply all manifests
+./kubernetes/scripts/apply
+
+# obtain app URL 
+minikube service frontend-svc --url
 ```
+
+Access the application in the browser. When done, run the following to delete the resources:
+```
+./kubernetes/scripts/delete
+```
+
+More information about the Kubernetes manifests can be found [here](https://github.com/KarenNgugi/CNE01-Independent_Project_3/blob/feat/kubernetes/kubernetes/README.md).
 
 ## Troubleshooting Guide
 
