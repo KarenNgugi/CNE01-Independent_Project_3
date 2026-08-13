@@ -8,7 +8,7 @@ metadata:
 spec:
   replicas: 2
 
-  updateStrategy:
+  strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 0
