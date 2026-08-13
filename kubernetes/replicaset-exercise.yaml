@@ -5,17 +5,19 @@ metadata:
   namespace: grades-tracker-namespace
   labels:
     tier: backend
+    kind: replicaset
 spec:
   replicas: 2
 
   selector:
     matchLabels:
       tier: backend
-
+      kind: replicaset
   template:
     metadata:
       labels:
         tier: backend
+        kind: replicaset
     spec:
       containers:
       - name: tracker-backend
