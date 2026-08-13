@@ -22,6 +22,7 @@ spec:
         image: karenngugi/grades-tracker-backend:1.0.0
         ports:
         - containerPort: 3000
+          name: backend-port
         env:
         - name: DB_HOST
           valueFrom: 
