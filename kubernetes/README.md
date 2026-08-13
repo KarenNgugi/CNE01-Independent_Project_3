@@ -175,7 +175,7 @@ kubectl delete -f backend-service.yaml
 kubectl delete -f frontend-service.yaml 
 kubectl delete -f persistent-volume-claim.yaml 
 kubectl delete -f persistent-volume.yaml 
-kubectl delete -f replicaset.yaml # if applied
+kubectl delete -f replicaset-exercise.yaml # if applied
 kubectl delete -f configmap.yaml 
 kubectl delete -f namespace.yaml 
 ```
