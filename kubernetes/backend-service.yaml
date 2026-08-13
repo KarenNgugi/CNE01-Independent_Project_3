@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: test-ns
+  name: backend-svc
+spec:
+  selector:
+    tier: backend
+  ports:
+  - name: backend-service
+    protocol: TCP
+    port: 3000
+    targetPort: backend-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: test-ns
+  name: tracker-backend
+spec:
+  selector:
+    tier: backend
+  ports:
+  - port: 3000
+    targetPort: backend-port
