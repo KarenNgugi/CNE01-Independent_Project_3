@@ -54,4 +54,11 @@ spec:
             configMapKeyRef:
               name: backend-configmap
               key: API_PORT
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
+          limits:
+            cpu: "1"
+            memory: "512Mi"
 
