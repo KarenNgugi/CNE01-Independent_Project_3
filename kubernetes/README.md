@@ -19,7 +19,7 @@ minikube start --driver=docker
 ### 1. Namespace
 Run:
 ```
-kubectl apply namespace.yaml
+kubectl apply -f namespace.yaml
 ```
 
 ### 2. Context, Secrets, & database initialization ConfigMap
@@ -44,7 +44,6 @@ To create the ConfigMap that initializes the database, run:
 kubectl create configmap init-db --from-file=../database/init.sql
 ```
 
-**Note:** it is safer to use secrets than to hardcode sensitive information.
 
 #### 2.2. Using the `context` script file
 Run:
@@ -58,6 +57,11 @@ The following command creates the ConfigMap which contains non-sensitive environ
 kubectl apply -f configmap.yaml
 ```
 
+2 ConfigMaps will be created. You can explore them further:
+```
+kubectl describe configmap backend-configmap
+kubectl describe configmap database-configmap
+```
 ### 4. ReplicaSet (optional)
 This step is optional, you can skip to the next one.
 To create the ReplicaSet:
@@ -66,14 +70,26 @@ kubectl apply -f replicaset.yaml
 ```
 
 ### 5. PersistentVolume & PersistentVolumeClaim
-First you need to create the PersistentVolume via:
+**First** create the PersistentVolume by running:
 ```
 kubectl apply -f persistent-volume.yaml
 ```
 
-Then you create the PersistentVolumeClaim which will bind to it:
+This will create a PersistentVolume called `grades-tracker-pv`. Confirm it is created and its Status says `Available`:
+```
+kubectl get pv
+kubectl describe pv grades-tracker-pv
+```
+
+Once done, create the PersistentVolumeClaim which will bind to it:
 ```
 kubectl apply -f persistent-volume-claim.yaml
+```
+
+A PersistentVolumeClaim called `grades-tracker-pvc` will be created. Confirm it is `Bound` to `grades-tracker-pv`:
+```
+kubectl get pvc
+kubectl describe pvc grades-tracker-pvc
 ```
 
 ### 6. Database
