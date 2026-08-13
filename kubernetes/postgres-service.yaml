@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: test-ns
+  namespace: grades-tracker-namespace
   name: database-svc
 spec:
   selector:
