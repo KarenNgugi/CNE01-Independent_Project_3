@@ -3,6 +3,8 @@ kind: Service
 metadata:
   namespace: grades-tracker-namespace
   name: database-svc
+  labels:
+    tier: database
 spec:
   selector:
     tier: database
