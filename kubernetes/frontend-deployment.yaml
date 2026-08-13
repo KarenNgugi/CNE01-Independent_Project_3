@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frde
+  name: grades-tracker-frontend-deployment 
   namespace: grades-tracker-namespace
   labels:
     tier: frontend
