@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grades-tracker-pvc
+  namespace: grades-tracker-namespace
+  labels:
+    app: grades-tracker-app
+spec:
+  selector:
+    matchLabels:
+      app: grades-tracker-app
+  storageClassName: ""
+  volumeName: grades-tracker-pv
+  resources:
+    requests:
+      storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  
