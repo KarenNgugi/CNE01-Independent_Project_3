@@ -121,6 +121,13 @@ Then run the following to create the frontend Deployment:
 kubectl apply -f frontend-deployment.yaml
 ```
 
+Once you have confirmed all pods are up and running, obtain the URL of the node serving the application:
+```
+minikube service frontend-svc --url
+```
+
+You can access the app on the given URL.
+
 ### 9. Cleaning up
 Run the following commands in order to gracefully delete the resources:
 ```
