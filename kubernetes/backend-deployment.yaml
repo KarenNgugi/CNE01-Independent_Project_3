@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
+  name: grades-tracker-backend-deployment
   namespace: grades-tracker-namespace
   labels:
     tier: backend
@@ -23,6 +23,13 @@ spec:
         ports:
         - containerPort: 3000
           name: backend-port
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
+          limits:
+            cpu: "1"
+            memory: "512Mi"
         env:
         - name: DB_HOST
           valueFrom: 
