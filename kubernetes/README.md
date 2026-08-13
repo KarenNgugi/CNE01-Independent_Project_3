@@ -99,7 +99,12 @@ kubectl apply -f postgres-service.yaml
 kubectl apply -f postgres-headless-service.yaml
 ```
 
-Then launch the statefulset:
+Two services will be created, namely `database-svc` and `headless-svc`. This can be confirmed by running:
+```
+kubectl get svc
+```
+
+Once confirmed, proceed to create the StatefulSet:
 ```
 kubectl apply -f postgres-statefulset.yaml
 ```
@@ -111,23 +116,22 @@ kubectl get pod
 ``` 
 
 ### 7. Backend
-First create the backend Service by running:
+First create the `tracker-backend` Service which will connect to the backend Deployment by running:
 ```
 kubectl apply -f backend-service.yaml
 ```
 
-You can confirm it has been created through:
-```
-kubectl get svc
-```
-
-Then create the backend Deployment by running
+Next create the `grades-tracker-backend-deployment`backend Deployment by running
 ```
 kubectl apply -f backend-deployment.yaml
 ```
 
+You can confirm that the deployment has been created via:
+```
+kubectl get deploy
+```
 ### 8. Frontend
-Run the following to create the frontend Service:
+To create the NodePort `frontend-svc` Service for the frontend, run the following:
 ```
 kubectl apply -f frontend-service.yaml
 ```
