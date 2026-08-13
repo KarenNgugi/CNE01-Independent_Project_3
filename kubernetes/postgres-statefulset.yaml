@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: grades-tracker-statefulset
+  namespace: grades-tracker-namespace
+spec:
+  selector:
+    matchLabels:
+      app: grades-tracker-app
+      tier: database
+  serviceName: headless-svc
+  replicas: 1
+  minReadySeconds: 10
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: grades-tracker-app
+        tier: database
+    spec:
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: init-db
+          configMap:
+            name: init-db
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: grades-tracker-pvc
+      containers:
+      - name: tracker-database
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+          name: database-port
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: database-configmap
+              key: POSTGRES_USER
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: database-configmap
+              key: POSTGRES_DB
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-password
+              key: POSTGRES_PASSWORD
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        volumeMounts:
+        - name: init-db
+          mountPath: /docker-entrypoint-initdb.d
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data 
