@@ -11,3 +11,6 @@
 # OS / editor
 .DS_Store
 .vscode/*.log
+
+# VS Code Workspaces
+*.code-workspace
