@@ -51,23 +51,38 @@ Run:
 ./context
 ```
 
+It will automatically run the steps to set the default namespace, and create the Secrets and the database initialization ConfigMap.
+
+
 ### 3. ConfigMap
 The following command creates the ConfigMap which contains non-sensitive environment variables:
 ```
 kubectl apply -f configmap.yaml
 ```
 
-2 ConfigMaps will be created. You can explore them further:
+Two ConfigMaps will be created. You can find them (and the `init-db` ConfigMap created in [Step 2](https://github.com/KarenNgugi/CNE01-Independent_Project_3/tree/feat/kubernetes/kubernetes#2-context-secrets--database-initialization-configmap)) by running:
+```
+kubectl get configmap
+```
+
+You can explore them further:
 ```
 kubectl describe configmap backend-configmap
 kubectl describe configmap database-configmap
 ```
 ### 4. ReplicaSet (optional)
-This step is optional, you can skip to the next one.
-To create the ReplicaSet:
+This step is optional. It was created as a precursor to creating the Deployments. If you choose to create this, don't be alarmed if the backend Pods throw an error. They have not be connected to a database yet.
+
+To create the ReplicaSet, run:
 ```
 kubectl apply -f replicaset.yaml
 ```
+
+You can confirm it has been created by running:
+```
+kubectl get rs
+```
+
 
 ### 5. PersistentVolume & PersistentVolumeClaim
 **First** create the PersistentVolume by running:
@@ -93,13 +108,13 @@ kubectl describe pvc grades-tracker-pvc
 ```
 
 ### 6. Database
-**First** set up the default database service and the Headless
+First set up the default database and the Headless Services:
 ```
 kubectl apply -f postgres-service.yaml
 kubectl apply -f postgres-headless-service.yaml
 ```
 
-Two services will be created, namely `database-svc` and `headless-svc`. This can be confirmed by running:
+Two Services will be created, namely `database-svc` and `headless-svc`. This can be confirmed by running:
 ```
 kubectl get svc
 ```
@@ -109,7 +124,7 @@ Once confirmed, proceed to create the StatefulSet:
 kubectl apply -f postgres-statefulset.yaml
 ```
 
-You can check the StatefulSet and the Pod that have been created using the following commands respectively:
+You can check the StatefulSet and the Pod that have been created using the following commands, respectively:
 ```
 kubectl get statefulset
 kubectl get pod
@@ -121,7 +136,7 @@ First create the `tracker-backend` Service which will connect to the backend Dep
 kubectl apply -f backend-service.yaml
 ```
 
-Next create the `grades-tracker-backend-deployment`backend Deployment by running
+Next create the `grades-tracker-backend-deployment`backend Deployment by running:
 ```
 kubectl apply -f backend-deployment.yaml
 ```
@@ -160,6 +175,7 @@ kubectl delete -f backend-service.yaml
 kubectl delete -f frontend-service.yaml 
 kubectl delete -f persistent-volume-claim.yaml 
 kubectl delete -f persistent-volume.yaml 
+kubectl delete -f replicaset.yaml # if applied
 kubectl delete -f configmap.yaml 
 kubectl delete -f namespace.yaml 
 ```
