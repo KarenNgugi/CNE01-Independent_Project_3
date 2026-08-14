@@ -1,6 +1,9 @@
 # use this instead of hardcoding /bin/bash
 #!/usr/bin/env bash
 
+# move to parent directory
+cd "$(dirname $0)/.."
+
 # apply manifests
 kubectl apply -f namespace.yaml 
 kubectl apply -f configmap.yaml 
