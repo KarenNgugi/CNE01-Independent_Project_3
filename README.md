@@ -33,14 +33,17 @@ git clone git@github.com:KarenNgugi/CNE01-Independent_Project_3.git .
 # start Minikube
 minikube start --driver=docker
 
+# move into the Kubernetes scripts folder
+cd kubernetes/scripts
+
 # run the script to apply all manifests
-./kubernetes/scripts/apply
+./apply
 
 # obtain app URL 
 minikube service frontend-svc --url
 ```
 
-Access the application in the browser. When done, run the following to delete the resources:
+Access the application in the browser using the provided URL. When done, run the following to delete the resources:
 ```
 ./kubernetes/scripts/delete
 ```
