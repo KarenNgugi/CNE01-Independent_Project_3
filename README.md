@@ -18,8 +18,11 @@ Upon completion of this project, the following will be demonstrated:
 You need the following to be able to run the application:
 - git
 - Docker
-- Minikube
 - kubectl
+- Minikube*
+
+**IMPORTANT NOTE:** *While Minikube has been listed as a prerequisite because the project was developed and tested on it, the manifests are intended to run on any standard Kubernetes cluster.
+
 
 ## Quick Start
 ```
