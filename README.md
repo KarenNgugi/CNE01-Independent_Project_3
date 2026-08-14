@@ -54,6 +54,21 @@ More information about the Kubernetes manifests, including **step-by-step instru
 
 
 ## Architecture*
+The following is a high level architectural diagram of the components in this project and how they relate to one another:
+![](https://github.com/KarenNgugi/CNE01-Independent_Project_3/blob/docs/readme/docs/High%20Level%20Architecture%20Overview.png)
+
+Description:
+- The browser connects to the frontend Service, `frontend-svc`
+- The frontend Service connects to the frontend Deployment, `grades-tracker-frontend-deployment`
+- The frontend Service communicates with the backend Service, `tracker-backend`
+- The backend Service connects to the backend Deployment, `grades-tracker-backend-deployment`
+- The backend Service communicates with the database Service, `database-svc`
+- The database Service connects to the database StatefulSet, `grades-tracker-statefulset`
+- The Headless Service, `db-headless`, also connects to the `grades-tracker-statefulset`
+- The database connects to the PersistentVolume, `grades-tracker-pv`
+- The `grades-tracker-namespace` encompasses all resources except the browser and the PersistentVolume
+
+For in-depth diagrams and details, check out [docs/architecture.md]()
 
 ## Resources*
 
