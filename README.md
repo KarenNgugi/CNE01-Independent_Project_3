@@ -21,7 +21,7 @@ You need the following to be able to run the application:
 - kubectl
 - Minikube*
 
-**IMPORTANT NOTE:** *While Minikube has been listed as a prerequisite because the project was developed and tested on it, the manifests are intended to run on any standard Kubernetes cluster.
+**IMPORTANT NOTE:** While Minikube has been listed as a prerequisite because the project was developed and tested on it, the manifests are intended to run on any standard Kubernetes cluster.*
 
 
 ## Quick Start
